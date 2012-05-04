@@ -1,0 +1,36 @@
+body { font: normal 13px arial; }
+
+a { color: #48A5D4; text-decoration: none; }
+a:hover { color: #277DA8; }
+
+#loading-fade { background-color: #777; display: none; height: 100%; left: 0; opacity: .1; position: fixed; top: 0; width: 100%; z-index: 9999; }
+
+#top { background-color: #DFF3FF; height: 60px; margin: 0 auto; width: width: 100%; }
+#top #logo { background: url('../img/r7.gif') no-repeat; cursor: pointer; float: left; height: 35px; margin-left: 30px; margin-top: 15px; width: 39px; }
+#top #logotipo { color: #3B3B3B; float: left; cursor: pointer; font: 20px verdana; margin-left: 7px; margin-top: 18px; width: 200px; }
+#top #menu { padding-right: 35px; padding-top: 30px; }
+#top #menu ul li { float: right; padding-right: 10px; }
+#top #menu ul .selected { border-bottom: 2px solid #7A7A7A; }
+#top #menu ul li a { font: bold 13px Helvetica, arial; text-align: center; text-shadow: 1px 1px 1px #FFF; text-transform: uppercase; }
+
+#content { margin: 0 auto; min-height: 531px; width: 100%; }
+#comments-wrapper { margin: 0 auto; width: 750px; }
+#comments-wrapper #info { float: left; margin-left: 5px; margin-top: 10px; width: 390px; }
+#comments-wrapper #info #result { color: #7A0; float: left; font: bold 11px verdana; }
+#comments-wrapper #info #loading { color: #888; display: none; float: right; margin-top: 10px; }
+#comments-wrapper textarea { margin: 0 auto; resize: vertical; }
+#comments-wrapper fieldset { border: #DDD solid 1px; height: 183px; margin: 15px auto 15px; padding: 10px 13px 14px; width: 300px; }
+#comments-wrapper input[type="button"] { -moz-border-image: none; -moz-border-colors: none; background: -moz-linear-gradient(center top, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.2) 100% ) repeat scroll 0 0 transparent; border-color: #CCC #AAA #AAA #CCC; border-radius: 3px 3px 3px 3px; border-right: 1px solid #AAA; border-style: solid; border-width: 1px; color: #444; cursor: pointer; display: inline-block; font-family: "HelveticaNeue", "Helvetica Neue", helvetica, arial, sans-serif; font-weight: bold; height: 33px; line-height: 21px; margin-bottom: 20px; padding: 4px 12px; text-decoration: none; text-shadow: 0 1px rgba(255, 255, 255, 0.75); }
+#comments-wrapper input[type="button"]:hover, input[type="button"]:focus { color: #0084B8; }
+#comments-wrapper input[type="button"]::-moz-focus-inner, button[type="button"]::-moz-focus-inner { border: 0; }
+#comments-wrapper input[type="button"] { float: right; font-size: 12px; margin-top: 10px; }
+#comments-wrapper .header { background-color: #FBFBFB; }
+#comments-wrapper .balloon { border-right: 1px solid #DDD; border-top: 1px solid #DDD; height: 25px; padding-right: 8px; padding-top: 4px; text-align: right; }
+#comments-wrapper .date { border-top: 1px solid #DDD; color: #666; font: bold 9px verdana; height: 25px; padding-right: 8px; text-align: right; }
+#comments-wrapper .description { border-left: 1px solid #DDD; border-top: 1px solid #DDD; color: #666; font: bold 10px verdana; height: 25px; padding-left: 8px; text-align: left; }
+#comments-wrapper .icon { border-left: 1px solid #DDD; border-top: 1px solid #DDD; color: #444; font: bold 9px verdana; height: 25px; padding-left: 8px; padding-top: 2px; text-align: left; }
+#comments-wrapper .text { border: 1px solid #DDD; padding: 7px; width: 750px; }
+#comments-wrapper .text .content { color: #444; float: right; font: 11px verdana; width: 665px; }
+
+#footer { background-color: #ACE0FF; clear: both; height: 50px; margin-top: 10px; width: 100%; }
+#footer #copy { font: 11px verdana; margin: 0 auto; padding-top: 19px; text-align: center; width: 100%; }

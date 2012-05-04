@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+	<Comment id="1" censured="meu comentário fofo!" original="meu comentário fofo!" valid="true" createdAt="2011-01-22 00:00:01" />
+	<Comment id="2" censured="comentário xxxx para censura!" original="comentário armado para censura!" valid="false" createdAt="2011-01-22 00:00:02" />
+	<Comment id="3" censured="A minha xxxx é para atirar no xxxx dos à toas do xxxx. Tudo xxxx!" original="A minha àrmá é para atirar no bumbum dos à toas do BBB. Tudo armado!" valid="false" createdAt="2011-01-22 00:00:03" />
+</dataset>

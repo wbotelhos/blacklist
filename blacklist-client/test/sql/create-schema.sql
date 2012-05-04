@@ -1,0 +1,7 @@
+/*
+-- HSQL
+CREATE SCHEMA r7;
+*/
+
+-- MySQL
+CREATE SCHEMA if NOT EXISTS r7;

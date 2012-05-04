@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+	<display-name>blacklist-client</display-name>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<filter>
+		<filter-name>filter</filter-name>
+		<filter-class>com.r7.blacklist.filter.JsonFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>filter</filter-name>
+		<url-pattern>*.json</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>CommentController</servlet-name>
+		<servlet-class>com.r7.blacklist.controller.CommentController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CommentController</servlet-name>
+		<url-pattern>/comment.json</url-pattern>
+	</servlet-mapping>
+
+</web-app>

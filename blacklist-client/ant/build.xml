@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding='UTF-8' ?>
+
+<project name="BlacklistClient" basedir=".." default="all">
+	<echo message="Java Version: ${ant.java.version}"/>
+
+	<property file="ant/build.properties" />
+
+	<path id="build.path">
+		<fileset dir="${lib.dir}/build" includes="**.jar"/>
+	</path>
+
+	<path id="lib.path">
+		<fileset dir="${web.dir}/WEB-INF/lib" includes="**.jar"/>
+	</path>
+
+	<path id="coverage.path">
+		<fileset dir="${coverage.app.dir}">
+			<include name="cobertura.jar" />
+			<include name="${lib.dir}/**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<echo>Cleaning...</echo>
+		<delete dir="${target.app.dir}" />
+		<delete dir="${target.test.dir}" />
+		<delete dir="${instrumented.dir}" />
+		<delete dir="${coverage.dir}" />
+		<delete dir="${report.dir}/xml" />
+		<delete dir="${war.dir}" />
+	</target>
+
+	<target name="make" depends="clean">
+		<echo>Creating directories...</echo>
+		<mkdir dir="${target.app.dir}" />
+		<mkdir dir="${target.test.dir}" />
+		<mkdir dir="${instrumented.dir}" />
+		<mkdir dir="${coverage.dir}" />
+		<mkdir dir="${report.dir}/xml" />
+		<mkdir dir="${war.dir}" />
+	</target>
+
+	<target name="copy" depends="make">
+		<echo>Copying root...</echo>
+		<copy todir="${target.app.dir}">
+			<fileset dir="${app.root}">
+				<include name="*.ico" />
+				<include name="*.sql" />
+			</fileset>
+		</copy>
+
+		<echo>Copying webcontent...</echo>
+		<copy todir="${target.app.dir}">
+			<fileset dir="${web.dir}" />
+		</copy>
+
+		<echo>Copying src...</echo>
+		<copy todir="${target.classes.dir}">
+			<fileset dir="${src.dir}" excludes="**/*.java" />
+		</copy>
+
+		<echo>Copying test...</echo>
+		<copy todir="${target.test.dir}">
+			<fileset dir="${test.dir}" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<target name="compile" depends="copy">
+		<echo>Compiling classes...</echo>
+		<javac destdir="${target.classes.dir}" srcdir="${src.dir}" debug="true"
+				debuglevel="vars,lines,source" source="1.6" target="1.6" encoding="UTF-8">
+			<classpath>
+				<path refid="lib.path" />
+				<path refid="build.path" />
+			</classpath>
+		</javac>
+
+		<echo>Compiling test classes...</echo>
+		<javac destdir="${target.test.dir}" srcdir="${test.dir}" debug="true"
+				debuglevel="vars,lines,source" source="1.6" target="1.6" encoding="UTF-8">
+			<classpath>
+				<path refid="lib.path" />
+				<path refid="build.path" />
+				<pathelement path="${target.classes.dir}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<echo>Creating coverage...</echo>
+	<taskdef classpathref="coverage.path" resource="tasks.properties" />
+
+	<target name="instrument" depends="compile">
+		<cobertura-instrument datafile="${coverage.dir}/cobertura.ser" todir="${instrumented.dir}">
+			<ignore regex="org.apache.log4j.*" />
+
+		    <fileset dir="${target.classes.dir}">
+		        <include name="**/*.class"/>
+		    </fileset>
+		</cobertura-instrument>
+	</target>
+
+	<echo>Testing junit...</echo>
+	<target name="test" depends="instrument">
+		<junit fork="true" showoutput="false">
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="${coverage.dir}/cobertura.ser" />
+			<sysproperty key="basedir" value=".." />
+			<formatter type="xml" />
+
+			<classpath location="${instrumented.dir}" />
+
+			<classpath>
+				<path refid="build.path" />
+				<path refid="lib.path" />
+				<fileset dir="${coverage.app.dir}">
+					<include name="cobertura.jar" />
+				</fileset>
+
+				<pathelement path="${instrument.dir}" />
+				<pathelement path="${target.classes.dir}" />
+				<pathelement path="${target.test.dir}" />
+			</classpath>
+
+			<test name="${testcase}" todir="${report.dir}" if="testcase" />
+
+			<batchtest todir="${report.dir}/xml" unless="testcase">
+				<fileset dir="${target.test.dir}">
+					<include name="**/**Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<echo>Testing coverage...</echo>
+	<target name="coverage" depends="test">
+	    <cobertura-report srcdir="${src.dir}" destdir="${coverage.dir}" datafile="${coverage.dir}/cobertura.ser" />
+	</target>
+
+	<target name="report" depends="coverage">
+		<junitreport todir="${report.dir}">
+			<fileset dir="${report.dir}/xml">
+				<include name="TEST-*.xml" />
+			</fileset>
+
+			<report todir="${report.dir}" format="frames" />
+		</junitreport>
+	</target>
+
+	<echo>Creating war...</echo>
+	<target name="war" depends="report">
+		<war destfile="${war.file}" webxml="${target.webinf.dir}/web.xml">
+			<zipfileset dir="${target.app.dir}" />
+		</war>
+	</target>
+
+	<echo>Removing temp folders...</echo>
+	<target name="all" depends="war">
+		<delete dir="${instrumented.dir}" />
+		<delete dir="${target.test.dir}" />
+		<delete dir="${target.app.dir}" />
+	</target>
+
+	<echo>Checking coverage...</echo>
+	<target name="coverage-check">
+		<cobertura-check branchrate="80" totallinerate="80" datafile="${coverage.dir}/cobertura.ser" />
+	</target>
+</project>

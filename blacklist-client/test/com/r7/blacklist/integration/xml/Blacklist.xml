@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+	<Blacklist id="1" word="arma" />
+	<Blacklist id="2" word="bumbum" />
+	<Blacklist id="3" word="BBB" />
+</dataset>
